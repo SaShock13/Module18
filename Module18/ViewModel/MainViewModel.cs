@@ -1,0 +1,147 @@
+﻿using Module18.Model;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace Module18.ViewModel
+{
+
+    //ToDo
+    //Задание 1
+//    Что нужно сделать
+//    По аналогии с разработанной в уроке 19.2 программой напишите программу, которая будет выводить данные по животным и
+//    в которую можно добавлять новых животных.Реализуйте интерфейс с общими параметрами и опишите класс для создания списка животных по типам:
+
+//млекопитающие;
+//птицы;
+//земноводные.
+//Необходимо предусмотреть возможность добавления неизвестного типа животного.
+
+//Советы и рекомендации
+//Программа должна быть реализована в графическом интерфейсе.Определите самостоятельно общие параметры в интерфейсе.
+
+//Что оценивается
+//Применение паттерна «Фабрика».
+//Использование интерфейса.
+//Реализация графического интерфейса.
+//Как отправить задание на проверку
+//Сдайте работу в одном из этих форматов:
+
+//Проект в архиве ZIP или RAR со всеми файлами.
+//Ссылка на архив на Google Диске (или аналогах).
+//Ссылка на репозиторий GitHub с исходным кодом домашнего задания.
+
+
+//Задание 2
+//Что нужно сделать
+//Расширим программу из задания 1. Реализуйте классы для сохранения данных в разные форматы. 
+
+//Советы и рекомендации
+//Программа должна быть реализована в графическом интерфейсе. Выберите сами, в каком формате хранить данные.
+
+//Что оценивается
+//Применение паттерна “Фабрика”.
+//Использование интерфейса.
+//Реализация графического интерфейса.
+//Использование внедрения зависимостей.
+//Реализация графического интерфейса.
+//Как отправить задание на проверку
+//Сдайте работу в одном из этих форматов:
+
+//Проект в архиве ZIP или RAR со всеми файлами.
+//Ссылка на архив на Google Диске (или аналогах).
+//Ссылка на репозиторий GitHub с исходным кодом домашнего задания.
+
+
+//Задание 3
+//Что нужно сделать
+//Необходимо улучшить задачу из прошлого задания, используя паттерн MVP.Разделите логику и интерфейс. Программа должна уметь добавлять, удалять, изменять и сохранять данные.
+
+//Советы и рекомендации
+//Программа должна иметь графический интерфейс. Решите сами, где и как будут храниться данные.
+
+//Что оценивается
+//Реализован паттерн MVP.
+//Выполняются операции добавления, удаления, изменения и сохранения записи.
+    class MainViewModel: INotifyPropertyChanged
+    {
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private ObservableCollection<ICreature>? creatures;
+        public ObservableCollection<ICreature>? Creatures
+        {
+            get { return creatures; }
+            set { creatures = value;
+               
+            }
+        }
+
+        public string? Name { get; set; }
+        
+        private string animalClass;
+
+        public string AnimalClass
+        {
+            get { return animalClass; }
+            set { animalClass = value; }
+        }
+
+
+
+
+        public string? Description { get; set; }
+        public uint Age { get; set; }
+
+        private RelayCommand addCommand;
+        public RelayCommand AddCommand
+        {
+            get
+            {
+                return addCommand ??
+                    (addCommand = new RelayCommand(obj =>
+                    {
+
+                        MessageBox.Show(AnimalClass);
+                        AddToCollection(AnimalClass,Name,Description,Age);
+                    }));
+            }
+        }
+
+        
+
+        public MainViewModel()
+        {
+            Creatures = new ObservableCollection<ICreature>();
+            FillCollection();
+
+        }
+
+        void FillCollection()
+        {
+            Creatures.Add(CreatureFactory.CreateACreature("Mammal","Кошка","Кошка обыкновенная",2));
+            Creatures.Add(CreatureFactory.CreateACreature("mammal", "Мышь", "Мышь обыкновенная", 7));
+            Creatures.Add(CreatureFactory.CreateACreature("Amphibian", "Аллигатор", "Аллигатор обыкновенный", 55));
+            Creatures.Add(CreatureFactory.CreateACreature("Bird", "Снегирь", "Снегирь обыкновенный", 1));
+            Creatures.Add(CreatureFactory.CreateACreature("Amphibian", "Ящерица", "Ящерица обыкновенная", 8));
+            Creatures.Add(CreatureFactory.CreateACreature("Bird", "Синица", "Синица обыкновенная", 3));
+            Creatures.Add(CreatureFactory.CreateACreature("Fish", "Камбала", "Камбала морская", 3));
+        }
+
+        void AddToCollection(string animalClass, string name, string desc, uint age)
+        {
+            Creatures.Add(CreatureFactory.CreateACreature(animalClass, name, desc, age));
+        }
+    }
+}

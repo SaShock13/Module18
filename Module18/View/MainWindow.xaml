@@ -1,0 +1,41 @@
+﻿<Window x:Class="Module18.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Module18"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" ></ColumnDefinition>
+            <ColumnDefinition  Width="0.4*" ></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid  Grid.Column="0"  ItemsSource="{Binding Creatures}" Margin="10,10,10,10"/>
+        <StackPanel Grid.Column="1" >
+            <Button Content="Добавить" Command="{Binding AddCommand}" Margin="10" VerticalAlignment="Top" />
+            <TextBlock  HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="Название животного" VerticalAlignment="Top"/>
+            <TextBox  Margin="10" TextWrapping="Wrap" Text="{Binding Name }" VerticalAlignment="Top"/>
+            <TextBlock  HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="Описание животного" VerticalAlignment="Top"/>
+            <TextBox  Margin="10" TextWrapping="Wrap" Text="{Binding Description }" VerticalAlignment="Top"/>
+            <TextBlock  HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="Возраст животного" VerticalAlignment="Top"/>
+            <TextBox  Margin="10" TextWrapping="Wrap" Text="{Binding Age }"/>
+            <TextBlock Margin="10"  TextWrapping="Wrap"  Text="Класс Животного"/>
+            <ComboBox   SelectedItem="{Binding AnimalClass}" Margin="10">
+                <sys:String>Mammal</sys:String>
+                <sys:String>Amphibian</sys:String>
+                <sys:String>Bird</sys:String>
+            </ComboBox>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Module18.ViewModel;
+
 
 namespace Module18
 {
@@ -19,6 +21,9 @@ namespace Module18
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
+
+        
     }
 }
