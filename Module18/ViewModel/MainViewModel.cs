@@ -1,4 +1,5 @@
 ﻿using Module18.Model;
+using Module18.Savers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -72,12 +73,8 @@ namespace Module18.ViewModel
 //Выполняются операции добавления, удаления, изменения и сохранения записи.
     class MainViewModel: INotifyPropertyChanged
     {
-
+        #region ПОЛЯ
         public event PropertyChangedEventHandler? PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private ObservableCollection<ICreature>? creatures;
         public ObservableCollection<ICreature>? Creatures
@@ -88,7 +85,8 @@ namespace Module18.ViewModel
             }
         }
 
-        public string? Name { get; set; }
+        public string FileName { get; set; } = "listOfAnimals";
+        public string Name { get; set; }
         
         private string animalClass;
 
@@ -97,13 +95,22 @@ namespace Module18.ViewModel
             get { return animalClass; }
             set { animalClass = value; }
         }
+        public string SaveType { get; set; } = ".txt";
 
+        private string animalsList;
 
+        public string AnimalsList
+        {
+            get { return animalsList; }
+            set { animalsList = value; }
+        }
 
 
         public string? Description { get; set; }
         public uint Age { get; set; }
+        #endregion
 
+        #region КОМАНДЫ
         private RelayCommand addCommand;
         public RelayCommand AddCommand
         {
@@ -112,26 +119,66 @@ namespace Module18.ViewModel
                 return addCommand ??
                     (addCommand = new RelayCommand(obj =>
                     {
-
-                        MessageBox.Show(AnimalClass);
                         AddToCollection(AnimalClass,Name,Description,Age);
                     }));
             }
         }
-
-        
-
-        public MainViewModel()
+        private RelayCommand saveCommand;
+        public RelayCommand SaveCommand
         {
-            Creatures = new ObservableCollection<ICreature>();
-            FillCollection();
+            get
+            {
+                return saveCommand ??
+                    (saveCommand = new RelayCommand(obj =>
+                    {
+                        MakeAListString();
 
+                        ISaver converter;
+                        switch (SaveType)
+                        {
+                            case ".json": 
+                                {
+                                    converter =new SaverToJson(FileName);
+                                    break; 
+                                }
+                            case ".xmls":
+                                {
+                                    converter = new SaverToXmls(FileName);
+                                    
+                                    break; 
+                                }
+                            default:
+                                {
+                                    converter = new SaverToTxt(FileName);
+                                    
+                                    break;
+                                }
+                        }
+
+                        ListSaver listSaver = new(converter);
+                        listSaver.Save(AnimalsList);
+
+
+                    }));
+            }
         }
+        #endregion
 
+        #region МЕТОДЫ
+
+        void MakeAListString()
+        {
+            AnimalsList = "Список животных:\n";
+            foreach (var item in Creatures)
+            {
+                AnimalsList += $"{item.AnimalClass} {item.Name} : {item.Description}, возраст {item.Age} лет\n";
+
+            }
+        }
         void FillCollection()
         {
-            Creatures.Add(CreatureFactory.CreateACreature("Mammal","Кошка","Кошка обыкновенная",2));
-            Creatures.Add(CreatureFactory.CreateACreature("mammal", "Мышь", "Мышь обыкновенная", 7));
+            Creatures.Add(CreatureFactory.CreateACreature("Mammal", "Кошка", "Кошка обыкновенная", 2));
+            Creatures.Add(CreatureFactory.CreateACreature("Mammal", "Мышь", "Мышь обыкновенная", 7));
             Creatures.Add(CreatureFactory.CreateACreature("Amphibian", "Аллигатор", "Аллигатор обыкновенный", 55));
             Creatures.Add(CreatureFactory.CreateACreature("Bird", "Снегирь", "Снегирь обыкновенный", 1));
             Creatures.Add(CreatureFactory.CreateACreature("Amphibian", "Ящерица", "Ящерица обыкновенная", 8));
@@ -143,5 +190,18 @@ namespace Module18.ViewModel
         {
             Creatures.Add(CreatureFactory.CreateACreature(animalClass, name, desc, age));
         }
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+
+        public MainViewModel()
+        {
+            Creatures = new ObservableCollection<ICreature>();
+            FillCollection();
+            AnimalClass = null!;                      
+        }        
     }
 }
