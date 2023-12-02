@@ -74,27 +74,21 @@ namespace Module18.ViewModel
     class MainViewModel: INotifyPropertyChanged
     {
         #region ПОЛЯ
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private ObservableCollection<ICreature>? creatures;
         public ObservableCollection<ICreature>? Creatures
         {
             get { return creatures; }
-            set { creatures = value;
-               
-            }
+            set { creatures = value;}
         }
 
         public string FileName { get; set; } = "listOfAnimals";
         public string Name { get; set; }
-        
-        private string animalClass;
 
-        public string AnimalClass
-        {
-            get { return animalClass; }
-            set { animalClass = value; }
-        }
+        public string AnimalClass { get; set; } = "Mammal";
+
         public string SaveType { get; set; } = ".txt";
 
         private string animalsList;
@@ -201,7 +195,6 @@ namespace Module18.ViewModel
         {
             Creatures = new ObservableCollection<ICreature>();
             FillCollection();
-            AnimalClass = null!;                      
         }        
     }
 }
