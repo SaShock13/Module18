@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Module18"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800"
+        Height="600" Width="1000"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -14,46 +14,59 @@
         TextOptions.TextFormattingMode="Ideal"
      TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid ShowGridLines="False">
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Title="Каталог животных"
+        
+        >
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" ></ColumnDefinition>
-            <ColumnDefinition  Width="0.4*" ></ColumnDefinition>
+            <ColumnDefinition  Width="0.3*" ></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
-        <DataGrid  Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Creatures}" Margin="10,10,10,10"/>
 
-        <Grid Grid.Column="1" >
+        <DataGrid IsReadOnly="True" Grid.Column="0" AutoGenerateColumns="False" Grid.Row="0" ItemsSource="{Binding Creatures}" Margin="20,20,10,20">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Класс животного" Binding="{Binding Path=AnimalClass}" Width="150" />
+                <DataGridTextColumn Header="Название" Binding="{Binding Path=Name}" Width="150" />
+                <DataGridTextColumn Header="Описанние"  Binding="{Binding Path=Description}" Width="250" />
+                <DataGridTextColumn Header="Возраст" Binding="{Binding Path=Age}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Column="1"  Margin="10,20,20,20" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"  ></RowDefinition>
-                <RowDefinition Height="0.5*"  ></RowDefinition>
+                <RowDefinition Height="10*"  ></RowDefinition>
+                <RowDefinition Height="7*"  ></RowDefinition>
             </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Row="0">
-            <Button Content="Добавить" Command="{Binding AddCommand}" Margin="10" VerticalAlignment="Top" />
-            <TextBlock  HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="Название животного" VerticalAlignment="Top"/>
-            <TextBox  Margin="10" TextWrapping="Wrap" Text="{Binding Name }" VerticalAlignment="Top"/>
-            <TextBlock  HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="Описание животного" VerticalAlignment="Top"/>
-            <TextBox  Margin="10" TextWrapping="Wrap" Text="{Binding Description }" VerticalAlignment="Top"/>
-            <TextBlock  HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="Возраст животного" VerticalAlignment="Top"/>
-            <TextBox  Margin="10" TextWrapping="Wrap" Text="{Binding Age }"/>
-            <TextBlock Margin="10"  TextWrapping="Wrap"  Text="Класс Животного"/>
-            <ComboBox   SelectedItem="{Binding AnimalClass}" Margin="10">
-                <sys:String>Mammal</sys:String>
-                <sys:String>Amphibian</sys:String>
-                <sys:String>Bird</sys:String>
-            </ComboBox>
-        </StackPanel>
-        <StackPanel Grid.Row="1">
-        <Button  Content="Сохранить в..." Command="{Binding SaveCommand}" Margin="10" VerticalAlignment="Top" />
-        <ComboBox   SelectedItem="{Binding SaveType}" Margin="10">
-            <sys:String>.txt</sys:String>
-            <sys:String>.xmls</sys:String>
-            <sys:String>.json</sys:String>
-        </ComboBox>
-        <TextBlock  Text="Имя файла" FontSize="10" Margin="10,10,10,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
-        <TextBox   Text="{Binding FileName}" Margin="10,0,10,10" Grid.Column="1" Height="30"/>
-        </StackPanel>
+
+            <StackPanel Grid.Row="0">
+                <Button Content="Добавить" FontSize="15" Command="{Binding AddCommand}" Margin="10,0,10,10" VerticalAlignment="Top" />
+                <TextBlock  HorizontalAlignment="Left" FontSize="12" Foreground="LightSlateGray" Margin="10,10,10,-10" TextWrapping="Wrap" Text="Название животного" VerticalAlignment="Top"/>
+                <TextBox  Margin="10" TextWrapping="Wrap" FontSize="18" Text="{Binding Name }" VerticalAlignment="Top"/>
+                <TextBlock  HorizontalAlignment="Left" FontSize="12" Foreground="LightSlateGray" Margin="10,10,10,-10" TextWrapping="Wrap" Text="Описание животного" VerticalAlignment="Top"/>
+                <TextBox  Margin="10"  TextWrapping="Wrap" FontSize="18"  Text="{Binding Description }" VerticalAlignment="Top"/>
+                <TextBlock  HorizontalAlignment="Left" FontSize="12" Foreground="LightSlateGray" Margin="10,10,10,-10" TextWrapping="Wrap" Text="Возраст животного" VerticalAlignment="Top"/>
+                <TextBox  Margin="10" TextWrapping="Wrap" FontSize="18"  Text="{Binding Age }"/>
+                <TextBlock FontSize="12" Foreground="LightSlateGray" Margin="10,10,10,-10"  TextWrapping="Wrap"  Text="Класс Животного"/>
+                <ComboBox   SelectedItem="{Binding AnimalClass}"  FontSize="18"   Margin="10">
+                    <sys:String>Млекопитающие</sys:String>
+                    <sys:String>Земноводные</sys:String>
+                    <sys:String>Птицы</sys:String>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="0,7,0,0">
+                <Button  Content="Сохранить как ..."  FontSize="15" Command="{Binding SaveCommand}" Margin="10" VerticalAlignment="Top" />
+                <TextBlock  Text="Формат файла" FontSize="12" Foreground="LightSlateGray" Margin="10,10,10,0"  VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
+                <ComboBox   SelectedItem="{Binding SaveType}"   FontSize="18" Margin="10">
+                    <sys:String>.txt</sys:String>
+                    <sys:String>.xmls</sys:String>
+                    <sys:String>.json</sys:String>
+                </ComboBox>
+                <TextBlock  Text="Имя файла" FontSize="12" Foreground="LightSlateGray" Margin="10,10,10,0"  VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
+                <TextBox   Text="{Binding FileName}"  FontSize="18"  Margin="10,0,10,10" Grid.Column="1"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

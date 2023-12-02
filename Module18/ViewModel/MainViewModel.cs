@@ -85,9 +85,44 @@ namespace Module18.ViewModel
         }
 
         public string FileName { get; set; } = "listOfAnimals";
-        public string Name { get; set; }
 
-        public string AnimalClass { get; set; } = "Mammal";
+
+        private string animalClass = "Млекопитающие";
+
+        public string AnimalClass
+        {
+            get { return animalClass; }
+            set { animalClass = value;
+                switch (value)
+                {
+                    case "Млекопитающие":
+                        {
+                            Name = "Тигр";
+                            Description = "Полосатый хищник";
+                            Age = 22;
+                            break;
+                        }
+                    case "Земноводные":
+                        {
+                            Name = "Игуана";
+                            Description = "Ящерицеобразное существо";
+                            Age = 99;
+                            break;
+                        }
+                    
+                    default:
+                        {
+                            Name = "Страус";
+                            Description = "Огромная птица, не умеет летать";
+                            Age = 12;
+                            break;
+                        }
+                }
+
+            }
+        }
+
+       // public string AnimalClass { get; set; } = "Млекопитающие";
 
         public string SaveType { get; set; } = ".txt";
 
@@ -99,9 +134,33 @@ namespace Module18.ViewModel
             set { animalsList = value; }
         }
 
+        private string name;
 
-        public string? Description { get; set; }
-        public uint Age { get; set; }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; NotifyPropertyChanged(); }
+        }
+
+        private string description;
+
+        public string Description
+        {
+            get { return description; }
+            set { description = value; NotifyPropertyChanged(); }
+        }
+        private uint age;
+
+        public uint Age
+        {
+            get { return age; }
+            set { age = value;
+                NotifyPropertyChanged();
+            }
+        }
+        //public string Name { get; set; }
+        //public string? Description { get; set; }
+        //public uint Age { get; set; }
         #endregion
 
         #region КОМАНДЫ
@@ -171,13 +230,13 @@ namespace Module18.ViewModel
         }
         void FillCollection()
         {
-            Creatures.Add(CreatureFactory.CreateACreature("Mammal", "Кошка", "Кошка обыкновенная", 2));
-            Creatures.Add(CreatureFactory.CreateACreature("Mammal", "Мышь", "Мышь обыкновенная", 7));
-            Creatures.Add(CreatureFactory.CreateACreature("Amphibian", "Аллигатор", "Аллигатор обыкновенный", 55));
-            Creatures.Add(CreatureFactory.CreateACreature("Bird", "Снегирь", "Снегирь обыкновенный", 1));
-            Creatures.Add(CreatureFactory.CreateACreature("Amphibian", "Ящерица", "Ящерица обыкновенная", 8));
-            Creatures.Add(CreatureFactory.CreateACreature("Bird", "Синица", "Синица обыкновенная", 3));
-            Creatures.Add(CreatureFactory.CreateACreature("Fish", "Камбала", "Камбала морская", 3));
+            Creatures.Add(CreatureFactory.CreateACreature("Млекопитающие", "Кошка", "Кошка обыкновенная", 2));
+            Creatures.Add(CreatureFactory.CreateACreature("Млекопитающие", "Мышь", "Мышь обыкновенная", 7));
+            Creatures.Add(CreatureFactory.CreateACreature("Земноводные", "Аллигатор", "Аллигатор обыкновенный", 55));
+            Creatures.Add(CreatureFactory.CreateACreature("Птицы", "Снегирь", "Снегирь обыкновенный", 1));
+            Creatures.Add(CreatureFactory.CreateACreature("Земноводные", "Ящерица", "Ящерица обыкновенная", 8));
+            Creatures.Add(CreatureFactory.CreateACreature("Птицы", "Синица", "Синица обыкновенная", 3));
+            Creatures.Add(CreatureFactory.CreateACreature("Рыбы", "Камбала", "Камбала морская", 3));
         }
 
         void AddToCollection(string animalClass, string name, string desc, uint age)
@@ -195,6 +254,7 @@ namespace Module18.ViewModel
         {
             Creatures = new ObservableCollection<ICreature>();
             FillCollection();
+            AnimalClass = "Млекопитающие";
         }        
     }
 }

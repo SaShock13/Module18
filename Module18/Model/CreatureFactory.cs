@@ -12,9 +12,9 @@ namespace Module18.Model
         {
             switch (animalClass) 
             {
-                case "Amphibian": return new Amphibian(name,desc,age);
-                case "Mammal": return new Mammal(name, desc, age);
-                case "Bird": return new Bird(name, desc, age);
+                case "Земноводные": return new Amphibian(name,desc,age);
+                case "Млекопитающие": return new Mammal(name, desc, age);
+                case "Птицы": return new Bird(name, desc, age);
 
                 default: return new NullCreature();
                 }
