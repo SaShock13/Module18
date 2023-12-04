@@ -15,6 +15,10 @@ namespace Module18.Model
         public uint Age { get; set; }
 
         public string AnimalClass { get; set; }
+        public Amphibian()
+        {
+            AnimalClass = "Земноводные";
+        }
         public Amphibian(string name, string desc, uint age)
         {
             Name = name;

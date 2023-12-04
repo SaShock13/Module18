@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Module18.Model
 {
-    interface ICreature
+    public interface ICreature
     {
-        string Name { get; }
-        string Description { get; }
-        uint Age { get; }
+        string Name { get; set; }
+        string Description { get; set; }
+        uint Age { get; set; }
         string AnimalClass { get; }
         
         
