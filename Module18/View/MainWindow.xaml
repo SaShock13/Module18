@@ -26,9 +26,9 @@
             <ColumnDefinition  Width="0.3*" ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <DataGrid Name="dgAnimals" IsReadOnly="True" AutoGenerateColumns="False" Grid.Column="0"  Grid.Row="0"  Margin="20,20,10,20">
+        <DataGrid Name="dgAnimals"  AutoGenerateColumns="False" Grid.Column="0"  Grid.Row="0"  Margin="20,20,10,20">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Класс животного" Binding="{Binding Path=AnimalClass}" Width="150" />
+                <DataGridTextColumn Header="Класс животного" IsReadOnly="True" Binding="{Binding Path=AnimalClass}" Width="150" />
                 <DataGridTextColumn Header="Название" Binding="{Binding Path=Name}" Width="150" />
                 <DataGridTextColumn Header="Описанние"  Binding="{Binding Path=Description}" Width="250" />
                 <DataGridTextColumn Header="Возраст" Binding="{Binding Path=Age}" Width="100" />
